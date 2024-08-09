@@ -28,7 +28,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 | REPO    | Branch      | SHA1                                                                                                    | Tag   |
 |---------|-------------|---------------------------------------------------------------------------------------------------------|-------|
-| CSF-SKM | development | [6a10ba5cc0ae826f7ca8cbf1fb1832039355fbf4](https://gerrit.ext.net.nokia.com/gerrit/c/CSF-SKM/+/7409911) | 23.11 FP2 PP1 |
+| CSF-SKM | development | [7073f95cf8f746a39dfec64ed23b9807dc36367d](https://gerrit.ext.net.nokia.com/gerrit/c/CSF-SKM/+/7515506) | 23.11 FP2 PP1 |
 
 ### Configurable Images
 
