@@ -5,7 +5,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 # Release notes version 23.11 FP2
 
-**Release date: 2024-07-12**
+**Release date: 2024-08-09**
 
 ---
 
@@ -18,7 +18,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 | Release Type                          | Software                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | RPMs                                  | <ul><li>[vault-1.17.1-1.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/vault-1.17.1-1.x86_64.rpm) </li> <li>[skm-2.35.0-1.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/skm-2.35.0-1.x86_64.rpm) </li> <li>[consul-template-0.19.4-0.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/consul-template-0.19.4-0.x86_64.rpm) </li></ul> |
-| Docker                                | <ul><li>[skm-rocky8/2.35.0-1.573](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky8/2.35.0-1.573/) </li> <li>[skm-rocky9/2.35.0-1.234](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky9/2.35.0-1.234/)</li> </ul>  |
+| Docker                                | <ul><li>[skm-rocky8/2.35.1-1.620](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky8/2.35.1-1.620/) </li> <li>[skm-rocky9/2.35.1-1.277](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky9/2.35.1-1.277/)</li> </ul>  |
 | Helm Chart                            | <ul><li>[cskm-8.2.0.tgz](https://repo.cci.nokia.net/csf-helm-stable/cskm-8.2.0.tgz) </li></ul>    |
 | Ansible Playbook for RPM Installation | <ul><li>[cskm-ansible-2.35.0-1.tgz](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/cskm-ansible-2.35.0-1.tgz) </li></ul>   |
 | CCTF Tests                            | <ul><li>[TP-cskm-2.35.0-1.tgz](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/TP-cskm-2.35.0-1.tgz) </li></ul> |
@@ -28,7 +28,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 | REPO    | Branch      | SHA1                                                                                                    | Tag   |
 |---------|-------------|---------------------------------------------------------------------------------------------------------|-------|
-| CSF-SKM | development | [6a10ba5cc0ae826f7ca8cbf1fb1832039355fbf4](https://gerrit.ext.net.nokia.com/gerrit/c/CSF-SKM/+/7409911) | 23.11 FP2 |
+| CSF-SKM | development | [6a10ba5cc0ae826f7ca8cbf1fb1832039355fbf4](https://gerrit.ext.net.nokia.com/gerrit/c/CSF-SKM/+/7409911) | 23.11 FP2 PP1 |
 
 ### Configurable Images
 
@@ -212,8 +212,8 @@ CSKM 23.11 FP2 - Secret Key Management container Rocky9
 
 | JIRA                                                                | Description                                                                          |
 |---------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| [CSFSEC-9636](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9636) | Helm Best Practices 3.9                                                              |
-| [CSFSEC-9634](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9634) | CSKM container architecture to ensure OOMKill visibility                             |
+| [CSFSEC-10242](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10242)) | Base_OS update to 3.11.9-20240801 and packages update                                                             |
+| [CSFSEC-10287](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10287) | Disable audit log listener, if audit_logging is disabled                             |
 | [CSFSEC-9176](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9176) | Vault FOSS update to 1.17.1                                                          |
 | [CSFSEC-9544](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9544) | Base Image - 3.11.7-20240604, CBUR - 23.11FP1PP1, CLOG - 23.09FP3,CMDB - 23.09FP2PP2 |
 | [CSFSEC-9917](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9917) | No deprecated Kubernetes API's should be used                                        |
@@ -283,7 +283,7 @@ CSKM does not support Horizontal Pod Autoscaling and Active-Active Georedundancy
 ### Anycloud Test results
 
 - Tested on multiple anycloud and NCS clusters - OCP-4.15, EKS-1.30, GKE-1.29, AKS-1.29, TKG-2.5, NCS 23.10 and NCS 24.7
-- [CSKM-23.11FP2 XRAY TEST PLAN](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10060)
+- [CSKM-23.11FP2 PP1 XRAY TEST PLAN](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10391)
 
 ### Performance measurement
 
