@@ -3,7 +3,7 @@ title: 		Release notes template
 summary: 	This is the asset template file for Release Notes.  Be sure to remove all "!!! NOTE" entries.
 ---
 
-# Release notes version 23.11 FP2
+# Release notes version 23.11 FP2 PP1
 
 **Release date: 2024-08-09**
 
@@ -19,7 +19,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | RPMs                                  | <ul><li>[vault-1.17.1-1.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/vault-1.17.1-1.x86_64.rpm) </li> <li>[skm-2.35.0-1.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/skm-2.35.0-1.x86_64.rpm) </li> <li>[consul-template-0.19.4-0.x86_64.rpm](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/consul-template-0.19.4-0.x86_64.rpm) </li></ul> |
 | Docker                                | <ul><li>[skm-rocky8/2.35.1-1.620](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky8/2.35.1-1.620/) </li> <li>[skm-rocky9/2.35.1-1.277](https://repo.cci.nokia.net/csf-docker-delivered/cskm/skm-rocky9/2.35.1-1.277/)</li> </ul>  |
-| Helm Chart                            | <ul><li>[cskm-8.2.0.tgz](https://repo.cci.nokia.net/csf-helm-stable/cskm-8.2.0.tgz) </li></ul>    |
+| Helm Chart                            | <ul><li>[cskm-8.2.1.tgz](https://repo.cci.nokia.net/csf-helm-stable/cskm-8.2.1.tgz) </li></ul>    |
 | Ansible Playbook for RPM Installation | <ul><li>[cskm-ansible-2.35.0-1.tgz](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/cskm-ansible-2.35.0-1.tgz) </li></ul>   |
 | CCTF Tests                            | <ul><li>[TP-cskm-2.35.0-1.tgz](https://repo.cci.nokia.net/csf-yum-delivered/CSKM/1543/TP-cskm-2.35.0-1.tgz) </li></ul> |
 | Auto release scripts                  | <ul><li>[test-script-2.35.0.tgz](https://repo.cci.nokia.net/list/csf-yum-delivered/CSKM/1543/test-script-2.35.0.tgz) </li></ul>      |
@@ -34,7 +34,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 #### cbur/cbur-agent
 
-- Default Image Tag: 1.2.1-alpine-47
+- Default Image Tag: 1.3.0-alpine-1338
 - Security Scan: [Security Results](https://docs.ext.net.nokia.com/csf/lc/cbur/latest/releases/CCBUR_23.11FP1PP1.html#security-testing-reports)
 - TALKO: #[20963](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20963)
 - VAMS: [CBUR - Backup and Recovery container cbur-agent 23.11 FP1 PP1](https://vams.ext.net.nokia.com/)
@@ -45,11 +45,15 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
       # cbura docker image
       _imageFlavorMapping:
         - flavor: &defaultCburImageFlavor "rocky8"
-          tag: &defaultCburImageTag "1.2.1-alpine-47"
+          tag: &defaultCburImageTag "1.3.0-alpine-1338"
           repository: &defaultCburImageRepo "cbur/cbur-agent"
-            
+    
+        - flavor: "rocky9"
+          tag: "1.3.0-alpine-1338"
+          repository: "cbur/cbur-agent"
+    
       # cbur pod image
-      # This field points to the default value for imageFlavor.
+        # This field points to the default value for imageFlavor.
       imageRepo:
       _imageRepo: *defaultCburImageRepo
       imageTag:
@@ -61,7 +65,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 #### tools/kubectl
 
-- Default Image Tag: 1.28.11-rocky8-nano-20240627
+- Default Image Tag: 1.28.12-rocky8-nano-20240801
 - Security Scan: [Security Results](https://gitlabe2.ext.net.nokia.com/csf/os/ccbi/-/blob/master/attachments/ccbi-202407/kubectl-1.28.11-rocky8-nano-20240627.csv)
 - TALKO: #[19761](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=21868)
 - VAMS: [docker image kubectl 1.28.11-rocky8-nano-20240627](https://vams.ext.net.nokia.com/)
@@ -71,15 +75,15 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
     kubectl:
       _imageFlavorMapping:
         - flavor: &defaultKubectlImageFlavor "rocky8"
-          tag: &defaultKubectlImageTag "1.28.11-rocky8-nano-20240627"
+          tag: &defaultKubectlImageTag "1.28.12-rocky8-nano-20240801"
           repository: &defaultKubectlImageRepo "tools/kubectl"
-
+    
         - flavor: "rocky9"
-          tag: "1.30.2-rocky9-nano-20240627"
+          tag: "1.30.3-rocky9-nano-20240801"
           repository: "tools/kubectl"
-
+    
       # kubectl pod image
-      # This field points to the default value for imageFlavor.
+        # This field points to the default value for imageFlavor.
       imageRepo:
       _imageRepo: *defaultKubectlImageRepo
       imageTag:
@@ -91,7 +95,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 #### keycloak/keycloak-py
 
-- Default Image Tag: 1.1.3-rocky8-python3.11-120
+- Default Image Tag: 1.1.4-rocky8-python3.11-3
 - Security Scan: [Security Results](https://nokia.sharepoint.com/:x:/s/csf/domains/sec/EV7TcnNFWAFJk59xbpUdsTABreTiTIrgp26xd0egf9NVsA?e=62iScE)
 - TALKO: [20807](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20807)
 - VAMS: [CKEY 23.09 FP3 - Web SSO container Rocky8](https://vams.ext.net.nokia.com/)
@@ -102,15 +106,15 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
       # Resource watcher docker image
       _imageFlavorMapping:
         - flavor: &defaultKeycloakPyImageFlavor "rocky8"
-          tag: &defaultKeycloakPyImageTag "1.1.3-rocky8-python3.11-120"
-          repository: &defaultKeycloakPyImageRepo "keycloak/keycloak-py"
-
+          tag: &defaultKeycloakPyImageTag "1.1.4-rocky8-python3.11-3"
+          repository: &defaultKeycloakPyImageRepo "keycloak/ckey-py"
+    
         - flavor: "rocky9"
-          tag: "1.1.3-rocky9-python3.11-16"
+          tag: "1.1.4-rocky9-python3.11-3"
           repository: "keycloak/ckey-py"
-
-      # Resource watcher pod image
-      # This field points to the default value for imageFlavor.
+    
+      # Resource Watcher Job image
+        # This field points to the default value for imageFlavor.
       imageRepo:
       _imageRepo: *defaultKeycloakPyImageRepo
       imageTag:
