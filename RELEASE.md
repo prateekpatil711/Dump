@@ -67,7 +67,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 - Default Image Tag: 1.28.12-rocky8-nano-20240801
 - Security Scan: [Security Results](https://gitlabe2.ext.net.nokia.com/csf/os/ccbi/-/blob/master/attachments/ccbi-202408/kubectl-1.28.12-rocky8-nano-20240801.csv)
-- TALKO: #[19761](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=21868)*
+- TALKO: #[21868](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=21868)
 - VAMS: [docker image kubectl 1.28.12-rocky8-nano-20240801](https://vams.ext.net.nokia.com/)
 - Instructions: Used for all helm jobs
 
@@ -142,7 +142,6 @@ CSF Components
 Release name:
 
 ```
-CSKM 23.11 FP2 PP1 - Secret Key Management
 CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky8
 CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 
@@ -163,8 +162,8 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 - Authenticated local vulnerability scan:
     - [jenkins_CSKM_23_11_FP2_Rocky8_nessus_local.pdf](https://nokia.sharepoint.com/:b:/s/csf/domains/sec/EVrVoapo6uJPhPAJLbu2DS0BtmcMr7PoNkDgtA6BYap9gg?e=ZPvQEq)
 - Container vulnerability scan:
-    - [23_11_FP2_CSKM_Rocky8_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/s/csf/domains/sec/EbERIuZBZflJtaPQ_UkMnf8B6roCylv1g0mppU08u3bGtw?e=blvpnV)
-    - [23_11_FP2_CSKM_Rocky9_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/s/csf/domains/sec/EXY1Z0kZTi9NoFmdbD3GR2oBJ5NJydJMcEyVWYXXXyNBPg?e=LKMpHP)
+    - [23_11_FP2_CSKM_Rocky8_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
+    - [23_11_FP2_CSKM_Rocky9_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
 - Web application vulnerability scan: N/A
 - Robustness testing: No security modifications for 23.11 FP2. [23.11FP2 HTTP-Server Suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/ESHXfVT1xUJNuVKFYMCAqBwBvzVePgXDH4sR1CnowFTlxg?e=EblPmJ)
 - DoS testing: No security modifications for 23.11 FP2. [23.11FP2 IPv4 Server Test suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/EZ1uZR29WFhKo1uL3-QJNuwBLRzGWtFPJywWYI5lQlHfNQ?e=100ogR) [23.11FP2 TCP for IPv4 Server Test suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/Eat_ExsjGsxHtKg5nqr8isEBDBZ8BbfCugRYUr69FwpdkA?e=A8QUQj)
@@ -272,7 +271,7 @@ CSKM does not support Horizontal Pod Autoscaling and Active-Active Georedundancy
 
 ### Anycloud Test results
 
-- Tested on multiple anycloud and NCS clusters - OCP-4.15, EKS-1.30, GKE-1.29, AKS-1.29, TKG-2.5, NCS 23.10 and NCS 24.7
+- Tested on multiple anycloud and NCS clusters - OCP-4.15, EKS-1.30, NCS 23.10 and NCS 24.7
 - [CSKM-23.11FP2 PP1 XRAY TEST PLAN](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10391)
 
 ### Performance measurement
