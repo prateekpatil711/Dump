@@ -210,25 +210,11 @@ CSKM 23.11 FP2 - Secret Key Management container Rocky9
 
 ### Features / Bug Fixes
 
-| JIRA                                                                | Description                                                                          |
-|---------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| [CSFSEC-10242](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10242)) | Base_OS update to 3.11.9-20240801 and packages update                                                             |
+| JIRA                                                                  | Description                                                                          |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [CSFSEC-10242](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10242) | Base_OS update to 3.11.9-20240801 and packages update                                |
 | [CSFSEC-10287](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10287) | Disable audit log listener, if audit_logging is disabled                             |
-| [CSFSEC-9176](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9176) | Vault FOSS update to 1.17.1                                                          |
-| [CSFSEC-9544](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9544) | Base Image - 3.11.7-20240604, CBUR - 23.11FP1PP1, CLOG - 23.09FP3,CMDB - 23.09FP2PP2 |
-| [CSFSEC-9917](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9917) | No deprecated Kubernetes API's should be used                                        |
-| [CSFSEC-9918](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9918) | Support for Red Hat OpenShift Cluster with FIPS mode enabled                         |
-| [CSFSEC-9919](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9919) | Istio - Service Mesh Requirements                                                    |
-| [CSFSEC-9924](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9924) | cgroupsv2 compliance                                                                 |
-| [CSFSEC-9930](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9930) | Rocky9 Support for CSKM Docker Images                                                |
-| [CSFSEC-9635](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9635) | Build using Assured Open Source Repos                                                |
-| [CSFSEC-9867](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9867) | Mysql alarm fix                                                                      |
-| [CSFSEC-10038](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10038) | Audit log CPU Performance issue fix                                                |
-| [CSFSEC-9627](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9627) | CSKM VSO ESO Integration Guide                                                       |
-| [CSFSEC-9750](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-9750) | CSKM-CKEY Integration Guide using vault agent                                        |
-| [CSFS-59602](https://jiradc2.ext.net.nokia.com/browse/CSFS-59602)   | Support for CSKM-CMDB redeployment                                                   |
-| [CSFSEC-7271](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-7271) | CSKM Sec 56.4                                                                        |
-| [CSFSEC-8539](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-8539) | CSKM - VSES 33.3                                                                     |
+| [CSFSEC-10388](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10388) | Backup pvc needs to be created only if cbur is enabled                               |
 
 ### Fixed CVEs
 
