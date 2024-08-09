@@ -127,9 +127,9 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 ## FOSS / Talko
 
 - [HashiCorp Vault 1.17.1](https://github.com/hashicorp/vault/blob/main/CHANGELOG.md#1171)
-- Certificate for CSKM 23.11 FP2 - Secret Key Management #[22242](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22242)
-- Certificate for CSKM 23.11 FP2 - Secret Key Management container Rocky8 #[22243](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22243)
-- Certificate for CSKM 23.11 FP2 - Secret Key Management container Rocky9 #[22244](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22244)
+- Certificate for CSKM 23.11 FP2 PP1 - Secret Key Management #[22242](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22242)
+- Certificate for CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky8 #[22243](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22243)
+- Certificate for CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9 #[22244](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=22244)
 
 ## SVM / VAMS
 
