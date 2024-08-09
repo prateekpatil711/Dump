@@ -96,9 +96,9 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 #### keycloak/keycloak-py
 
 - Default Image Tag: 1.1.4-rocky8-python3.11-3
-- Security Scan: [Security Results](https://nokia.sharepoint.com/:x:/s/csf/domains/sec/EV7TcnNFWAFJk59xbpUdsTABreTiTIrgp26xd0egf9NVsA?e=62iScE)
-- TALKO: [20807](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20807)
-- VAMS: [CKEY 23.09 FP3 - Web SSO container Rocky8](https://vams.ext.net.nokia.com/)
+- Security Scan: [Security Results](https://nokia.sharepoint.com/:x:/s/csf/domains/sec/EV7TcnNFWAFJk59xbpUdsTABreTiTIrgp26xd0egf9NVsA?e=62iScE)*
+- TALKO: [20807](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20807)*
+- VAMS: [CKEY 23.09 FP3 - Web SSO container Rocky8](https://vams.ext.net.nokia.com/)*
 - Instructions: Used for helm job. This job restarts CSKM pods if there are any changes to TLS certificates.
 
     ```yaml
@@ -149,7 +149,7 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 
 ## Security testing
 
-- [Security Testing plan](https://nokia.sharepoint.com/:w:/r/sites/csf/domains/sec/Shared%20Documents/CSF%20Catalog/CSKM/security/CSF_Security_Test_Plan_CSKM.docx?d=w7b093aba111a4b1080f23dc0ba10052b&csf=1&web=1&e=H7q6gj)
+- [Security Testing plan](https://nokia.sharepoint.com/:w:/r/sites/csf/domains/sec/Shared%20Documents/CSF%20Catalog/CSKM/security/CSF_Security_Test_Plan_CSKM.docx?d=w7b093aba111a4b1080f23dc0ba10052b&csf=1&web=1&e=H7q6gj)*
 - Anchore Scans have been imported to VAMS
 - Security Test results analysis
     - [Nessus local scan analysis](../guide/security/nessus_local_scans_rocky8.md)
@@ -158,12 +158,12 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 ### Security testing reports
 
 - Remote vulnerability and Port scan:
-    - [jenkins_CSKM_23_11_FP2_rocky8_nessus_remote.pdf](https://nokia.sharepoint.com/:b:/s/csf/domains/sec/EQHrBAYCPNtLohTUPRxgnfEBC6EOeDE1Jju5ZVmQjQiHUQ?e=HUUoCC)
+    - [jenkins_CSKM_23_11_FP2_PP1_rocky8_nessus_remote.pdf](https://nokia.sharepoint.com/:b:/s/csf/domains/sec/EQHrBAYCPNtLohTUPRxgnfEBC6EOeDE1Jju5ZVmQjQiHUQ?e=HUUoCC)*
 - Authenticated local vulnerability scan:
-    - [jenkins_CSKM_23_11_FP2_Rocky8_nessus_local.pdf](https://nokia.sharepoint.com/:b:/s/csf/domains/sec/EVrVoapo6uJPhPAJLbu2DS0BtmcMr7PoNkDgtA6BYap9gg?e=ZPvQEq)
+    - [jenkins_CSKM_23_11_FP2_PP1_Rocky8_nessus_local.pdf](https://nokia.sharepoint.com/:b:/s/csf/domains/sec/EVrVoapo6uJPhPAJLbu2DS0BtmcMr7PoNkDgtA6BYap9gg?e=ZPvQEq)*
 - Container vulnerability scan:
-    - [23_11_FP2_CSKM_Rocky8_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
-    - [23_11_FP2_CSKM_Rocky9_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
+    - [23_11_FP2_PP1_CSKM_Rocky8_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
+    - [23_11_FP2_PP1_CSKM_Rocky9_Docker_Anchore_Scans](https://nokia.sharepoint.com/:x:/r/sites/csf/domains/sec/_layouts/15/Doc.aspx?sourcedoc=%7BEFC510A4-E0D2-4AB1-BBE2-19B6189E6665%7D&file=CSKM_23_11_FP2_PP1_Rocky8_Anchore_Report.csv&action=default&mobileredirect=true)
 - Web application vulnerability scan: N/A
 - Robustness testing: No security modifications for 23.11 FP2. [23.11FP2 HTTP-Server Suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/ESHXfVT1xUJNuVKFYMCAqBwBvzVePgXDH4sR1CnowFTlxg?e=EblPmJ)
 - DoS testing: No security modifications for 23.11 FP2. [23.11FP2 IPv4 Server Test suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/EZ1uZR29WFhKo1uL3-QJNuwBLRzGWtFPJywWYI5lQlHfNQ?e=100ogR) [23.11FP2 TCP for IPv4 Server Test suite](https://nokia.sharepoint.com/:u:/s/csf/domains/sec/Eat_ExsjGsxHtKg5nqr8isEBDBZ8BbfCugRYUr69FwpdkA?e=A8QUQj)
@@ -182,7 +182,7 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 ### Required
 
 - Rocky: 8.10, 9
-- Base image: rocky8-python311-nano:3.11.7-20240604, rocky9-python311-nano:3.11.7-20240627
+- Base image: rocky8-python311-nano:3.11.7-20240604, rocky9-python311-nano:3.11.7-20240627*
 - kubectl docker image: 1.28.12-rocky8-nano-20240801, 1.30.3-rocky9-nano-20240801
 - cbur-agent image: 1.3.0-alpine-1338
 - Java: N/A
@@ -206,7 +206,7 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 ### Other
 
 - CMDB: 23.09 FP2 PP3
-- CBUR: 23.11 FP1 PP1
+- CBUR: 23.11 FP2
 - CLOG: 23.09 FP3
 
 ## Resolved issues
@@ -272,7 +272,7 @@ CSKM does not support Horizontal Pod Autoscaling and Active-Active Georedundancy
 ### Anycloud Test results
 
 - Tested on multiple anycloud and NCS clusters - OCP-4.15, EKS-1.30, NCS 23.10 and NCS 24.7
-- [CSKM-23.11FP2 PP1 XRAY TEST PLAN](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10391)
+- [CSKM-23.11FP2PP1 XRAY TEST PLAN](https://jiradc2.ext.net.nokia.com/browse/CSFSEC-10391)
 
 ### Performance measurement
 
@@ -303,28 +303,7 @@ CSKM does not support Horizontal Pod Autoscaling and Active-Active Georedundancy
 
 Values changes
 
-```yaml
-global:
-  keepImmutableSecret: False
-
-  istio:
-    version: "1.6"
-    enabled: False
-    mtls:
-      enabled: True
-      mode: "STRICT"
-
-cskm:
-  useServiceAccountVolumeProjection: true
-  tokenExpirationSeconds: 3600
-
-istio:
-  version:
-  enabled:
-  mtls:
-    enabled:
-    mode:
-```
+No Changes in Values.yaml for this release.
 
 ### API / CLI
 
