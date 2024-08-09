@@ -36,8 +36,8 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 
 - Default Image Tag: 1.3.0-alpine-1338
 - Security Scan: [Security Results](https://docs.ext.net.nokia.com/csf/lc/cbur/latest/releases/latest.html#security-testing-reports)
-- TALKO: #[20963](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20963)
-- VAMS: [CBUR - Backup and Recovery container cbur-agent 23.11 FP1 PP1](https://vams.ext.net.nokia.com/)
+- TALKO: #[21547](https://talko.ext.net.nokia.com/certificates/details.php?certificate_id=21547)
+- VAMS: [CBUR - Backup and Recovery container cbur-agent 23.11 FP2](https://vams.ext.net.nokia.com/)
 - Instructions: Used for backup/restore, the functionality was enabled by default. Users could update according to its own requirement.
 
     ```yaml
@@ -66,9 +66,9 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 #### tools/kubectl
 
 - Default Image Tag: 1.28.12-rocky8-nano-20240801
-- Security Scan: [Security Results](https://gitlabe2.ext.net.nokia.com/csf/os/ccbi/-/blob/master/attachments/ccbi-202407/kubectl-1.28.11-rocky8-nano-20240627.csv)
-- TALKO: #[19761](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=21868)
-- VAMS: [docker image kubectl 1.28.11-rocky8-nano-20240627](https://vams.ext.net.nokia.com/)
+- Security Scan: [Security Results](https://gitlabe2.ext.net.nokia.com/csf/os/ccbi/-/blob/master/attachments/ccbi-202408/kubectl-1.28.12-rocky8-nano-20240801.csv)
+- TALKO: #[19761](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=21868)*
+- VAMS: [docker image kubectl 1.28.12-rocky8-nano-20240801](https://vams.ext.net.nokia.com/)
 - Instructions: Used for all helm jobs
 
     ```yaml
