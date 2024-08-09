@@ -142,9 +142,9 @@ CSF Components
 Release name:
 
 ```
-CSKM 23.11 FP2 - Secret Key Management
-CSKM 23.11 FP2 - Secret Key Management container Rocky8
-CSKM 23.11 FP2 - Secret Key Management container Rocky9
+CSKM 23.11 FP2 PP1 - Secret Key Management
+CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky8
+CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 
 ```
 
