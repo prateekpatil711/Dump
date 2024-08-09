@@ -35,7 +35,7 @@ summary: 	This is the asset template file for Release Notes.  Be sure to remove 
 #### cbur/cbur-agent
 
 - Default Image Tag: 1.3.0-alpine-1338
-- Security Scan: [Security Results](https://docs.ext.net.nokia.com/csf/lc/cbur/latest/releases/CCBUR_23.11FP1PP1.html#security-testing-reports)
+- Security Scan: [Security Results](https://docs.ext.net.nokia.com/csf/lc/cbur/latest/releases/latest.html#security-testing-reports)
 - TALKO: #[20963](https://talko.int.net.nokia.com/certificates/details.php?certificate_id=20963)
 - VAMS: [CBUR - Backup and Recovery container cbur-agent 23.11 FP1 PP1](https://vams.ext.net.nokia.com/)
 - Instructions: Used for backup/restore, the functionality was enabled by default. Users could update according to its own requirement.
@@ -184,8 +184,8 @@ CSKM 23.11 FP2 PP1 - Secret Key Management container Rocky9
 
 - Rocky: 8.10, 9
 - Base image: rocky8-python311-nano:3.11.7-20240604, rocky9-python311-nano:3.11.7-20240627
-- kubectl docker image: 1.28.11-rocky8-nano-20240627, 1.30.2-rocky9-nano-20240627
-- cbur-agent image: 1.2.1-alpine-47
+- kubectl docker image: 1.28.12-rocky8-nano-20240801, 1.30.3-rocky9-nano-20240801
+- cbur-agent image: 1.3.0-alpine-1338
 - Java: N/A
 - Python: 3.11.7
 - Network support: IPv4, IPv6, Dual-Stack
@@ -267,7 +267,7 @@ CSKM does not support Horizontal Pod Autoscaling and Active-Active Georedundancy
 
 ## Test results
 
-- CSKM 23.11 FP2 - Helm and RPM Testing.
+- CSKM 23.11 FP2 PP1 - Helm and RPM Testing.
 - All failed test cases have been tested manually. No issues observed.
 
 ### Anycloud Test results
