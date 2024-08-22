@@ -204,29 +204,34 @@ kubectl patch sts my-ckey-ckey -n testcskm --patch "$(cat patch-chart.yaml)"
 This command applies the patch defined in `patch-chart.yaml` to the StatefulSet named `my-ckey-ckey` in the `testcskm` namespace. After applying the patch, the CKEY StatefulSet will automatically restart its pods. The restarted pods will now include three containers. This ensures that secrets are securely managed and injected into your application using CSKM.
 
 
-## Configuring PKI Secret Engine for Certificate Management
+### Configuring PKI Secret Engine for Certificate Management
 
-The PKI Secret Engine in HashiCorp Vault is designed to generate and manage certificates dynamically. These certificates play a critical role in security, serving purposes such as keystores and truststores. By utilizing dynamic certificate generation, the PKI Secret Engine ensures that certificates are refreshed automatically upon rotation, offering enhanced security through the use of short-lived certificates.
+The PKI Secret Engine in CSKM is designed to generate and manage certificates dynamically. These certificates play a critical role in security, serving purposes such as keystores and truststores. By utilizing dynamic certificate generation, the PKI Secret Engine ensures that certificates are refreshed automatically upon rotation, offering enhanced security through the use of short-lived certificates.
 
-### Vault PKI Configuration Steps
+#### Vault PKI Configuration Steps
 
 To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
-1. **Enable the PKI Secret Engine:**
+1. **Start an interactive shell session on the `my-cskm-cskm-0` pod:**
+   ```bash
+   kubectl exec -it my-cskm-cskm-0 -n testcksm bash -c my-cskm-cskm
+   ```
+
+2. **Enable the PKI Secret Engine:**
    ```bash
    vault secrets enable pki
    ```
 
    This command activates the PKI Secret Engine, making it available for use.
 
-2. **Configure the Maximum Lease Time-To-Live (TTL) for the PKI Engine:**
+3. **Configure the Maximum Lease Time-To-Live (TTL) for the PKI Engine:**
    ```bash
    vault secrets tune -max-lease-ttl=8760h pki
    ```
 
    This setting defines the maximum duration that issued certificates will be valid, set here to 8760 hours (or one year).
 
-3. **Generate a Root Certificate:**
+4. **Generate a Root Certificate:**
    ```bash
    vault write -field=certificate pki/root/generate/internal \
      common_name="my-ckey-ckey.ncms.svc.cluster.local" \
@@ -235,7 +240,7 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
    This command generates a root certificate with a common name and issuer name, valid for the specified TTL.
 
-4. **Configure Issuing Certificates and Certificate Revocation List (CRL) Distribution Points:**
+5. **Configure Issuing Certificates and Certificate Revocation List (CRL) Distribution Points:**
    ```bash
    vault write pki/config/urls \
      issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
@@ -244,7 +249,7 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
    This configuration sets the URLs where issuing certificates and CRLs can be retrieved.
 
-5. **Create a Role for Certificate Issuance:**
+6. **Create a Role for Certificate Issuance:**
    ```bash
    vault write pki/roles/ckey-issuer \
      allowed_domains=ncms.svc.cluster.local \
@@ -254,13 +259,22 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
    This command defines a role for issuing certificates, specifying allowed domains, subdomain allowance, and the maximum TTL for issued certificates.
 
-6. **Issue a Certificate Using the Created Role:**
+7. **Issue a Certificate Using the Created Role:**
    ```bash
    vault write pki/issue/ckey-issuer \
      common_name="my-ckey-ckey.ncms.svc.cluster.local"
    ```
 
    This command issues a certificate based on the specified role and common name.
+
+8. **Update the `policy.json` with the capabilities required to access the certificates in the secret**
+   ```bash
+   {
+   "policy": "path \"internal/data/database/config\" {\n  capabilities = [\"read\"]\n}\n\npath \"pki/issue/ckey-issuer\" {\n  capabilities = [\"create\", \"read\", \"update\", \"list\"]\n}\n\npath \"pki/cert/*\" {\n  capabilities = [\"create\", \"read\", \"update\", \"list\"]\n}\n\npath \"pki/ca/pem\" {\n  capabilities = [\"create\", \"read\", \"update\", \"list\"]\n}\n"
+   }
+   ```
+
+   
 
 ### Configuring Certificates in CKEY
 
@@ -292,8 +306,9 @@ vault.hashicorp.com/agent-inject-file-tls.key: "tls.key"
 
 #### Annotations Explained
 
-- `vault.hashicorp.com/secret-volume-path-tls.key`: Specifies the directory or volume mount location where the file will be stored within the pod.
-- `vault.hashicorp.com/agent-inject-file-tls.key`: Defines the filename for the stored certificate or key at the specified location.
+- `vault.hashicorp.com/secret-volume-path-tls.crt`: Specifies the directory or volume mount location where the certificate file will be stored within the pod.
+- `vault.hashicorp.com/agent-inject-file-tls.crt`: Defines the filename for the certificate at the specified location.
+- `vault.hashicorp.com/secret-volume-path-tls.key`: Specifies the directory or volume mount location where the key file will be stored within the pod.
+- `vault.hashicorp.com/agent-inject-file-tls.key`: Defines the filename for the key at the specified location.
 
-By using these configurations, you ensure that your CKEY pod receives the necessary certificates, managed dynamically by HashiCorp Vault, and properly mounted for secure usage.
-
+By applying these configurations, you ensure that your KECY pod receives the required certificates managed dynamically by HashiCorp Vault and correctly mounts them for secure usage.
