@@ -1,35 +1,35 @@
-# Integration of MDCS with KECY Using Vault Injector
+# Integration of CSKM with CKEY Using Vault Injector
 
 ## Overview
 
-Integrating MDCS with KECY enhances security by dynamically managing secrets and securely injecting them into applications. Using the Vault injector, an open-source Vault chart, secrets are injected directly into Kubernetes pods, ensuring that sensitive information such as database credentials or API keys is handled securely and automatically rotated. This integration significantly improves the overall security posture of the system.
+Integrating CSKM with CKEY enhances security by dynamically managing secrets and securely injecting them into applications. Using the Vault injector, an open-source Vault chart, secrets are injected directly into Kubernetes pods, ensuring that sensitive information such as database credentials or API keys is handled securely and automatically rotated. This integration significantly improves the overall security posture of the system.
 
-## Steps to Integrate KECY with MDCS
+## Steps to Integrate CKEY with CSKM
 
-### 1. Installation of MDCS
+### 1. Installation of CSKM
 
-Ensure MDCS is installed with the Kubernetes authentication method by enabling the `kubernetesAuth` parameter in the `Values.yaml` file. Once installed, exec into the MDCS pod and follow these steps to enable authentication, create secrets, and configure policies.
+Ensure CSKM is installed with the Kubernetes authentication method by enabling the `kubernetesAuth` parameter in the `Values.yaml` file. Once installed, exec into the CSKM pod and follow these steps to enable authentication, create secrets, and configure policies.
 
-### 2. Installation of KECY
+### 2. Installation of CKEY
 
-Install KECY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
+Install CKEY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
 
-### 3. Retrieve Vault Token and MDCS Service IP
+### 3. Retrieve Vault Token and CSKM Service IP
 
-To connect to Vault from the Kubernetes cluster, obtain the Vault token and the MDCS service IP as follows:
+To connect to Vault from the Kubernetes cluster, obtain the Vault token and the CSKM service IP as follows:
 
 #### a. Retrieve the Vault Token
-Obtain the Vault token from the secret `my-mdcs-mdcs-secret` that is generated after installing the MDCS chart:
+Obtain the Vault token from the secret `my-cskm-cskm-secret` that is generated after installing the CSKM chart:
 
 ```bash
-export VAULT_TOKEN=$(kubectl -n testmdcs get secret my-mdcs-mdcs-secret -o jsonpath='{.data.token}' | base64 --decode)
+export VAULT_TOKEN=$(kubectl -n testcskm get secret my-cskm-cskm-secret -o jsonpath='{.data.token}' | base64 --decode)
 ```
 
-#### b. Retrieve the MDCS Service IP
-Get the Service IP of the MDCS:
+#### b. Retrieve the CSKM Service IP
+Get the Service IP of the CSKM:
 
 ```bash
-export VAULT_ADDR=$(kubectl get service my-mdcs-mdcs -n testmdcs -o jsonpath='{.spec.clusterIP}')
+export VAULT_ADDR=$(kubectl get service my-cskm-cskm -n testcskm -o jsonpath='{.spec.clusterIP}')
 export VAULT_ADDR=https://$VAULT_ADDR:8200
 ```
 
@@ -77,12 +77,12 @@ curl -k --header "X-Vault-Token:$VAULT_TOKEN" --request POST --data @config.json
 You can verify the configuration by querying the Kubernetes authentication endpoint:
 
 ```sh
-curl -k --header "X-Vault-Token:$VAULT_TOKEN" https://$mdcs_SVC_IP:8200/v1/auth/kubernetes/config | jq
+curl -k --header "X-Vault-Token:$VAULT_TOKEN" https://$cskm_SVC_IP:8200/v1/auth/kubernetes/config | jq
 ```
 
 ### Step 8: Define a Policy for Accessing Secrets
 
-Create a policy named `int-kecy` that grants read access to secrets located at the path `internal/data/database/config`. The policy is defined in a JSON file as follows:
+Create a policy named `int-ckey` that grants read access to secrets located at the path `internal/data/database/config`. The policy is defined in a JSON file as follows:
 
 ```json
 {
@@ -96,17 +96,17 @@ Create a policy named `int-kecy` that grants read access to secrets located at t
 Apply the policy using the following `curl` command:
 
 ```sh
-curl -k --header "X-Vault-Token: $VAULT_TOKEN"  --request PUT  --data-binary @policy.json $VAULT_ADDR/v1/sys/policy/int-kecy
+curl -k --header "X-Vault-Token: $VAULT_TOKEN"  --request PUT  --data-binary @policy.json $VAULT_ADDR/v1/sys/policy/int-ckey
 ```
 
 ### Step 9: Create a Kubernetes Authentication Role
 
-Next, create a Kubernetes authentication role named `int-kecy`. This role binds a specific service account used by the KECY StatefulSet to the authentication policy. The role configuration is defined as follows:
+Next, create a Kubernetes authentication role named `int-ckey`. This role binds a specific service account used by the CKEY StatefulSet to the authentication policy. The role configuration is defined as follows:
 
 ```json
 {
-  "bound_service_account_names": "my-kecy-kecy-stateful-sa",
-  "bound_service_account_namespaces": "testmdcs",
+  "bound_service_account_names": "my-ckey-ckey-stateful-sa",
+  "bound_service_account_namespaces": "testcskm",
   "policies": "keycloak-policy",
   "ttl": "24h"
 }
@@ -115,10 +115,10 @@ Next, create a Kubernetes authentication role named `int-kecy`. This role binds 
 To apply the role, use the following `curl` command:
 
 ```sh
-curl -k --request POST  --header "X-Vault-Token: $VAULT_TOKEN "  --data @role-data.json  $VAULT_ADDR/v1/auth/kubernetes/role/int-kecy
+curl -k --request POST  --header "X-Vault-Token: $VAULT_TOKEN "  --data @role-data.json  $VAULT_ADDR/v1/auth/kubernetes/role/int-ckey
 ```
 
-This role binds the service account of the KECY StatefulSet, allowing its service account token to be used for Kubernetes authentication as an intermediate step.
+This role binds the service account of the CKEY StatefulSet, allowing its service account token to be used for Kubernetes authentication as an intermediate step.
 
 ### Step 10: Install the Vault Injector
 
@@ -126,15 +126,15 @@ To install the Vault injector, use the open-source Vault Helm chart. After unzip
 
 ```yaml
 global:
-    externalVaultAddr: "https://my-mdcs-mdcs.testmdcs.svc.cluster.local:8200"
+    externalVaultAddr: "https://my-cskm-cskm.testcskm.svc.cluster.local:8200"
 injector:
     enabled: true
     image:
-        repository: "registry1-docker-io.repo.cci.inads.net/hashicorp/vault-k8s"
+        repository: "registry1-docker-io.repo.cci.nokia.net/hashicorp/vault-k8s"
         tag: "1.4.1"
         pullPolicy: IfNotPresent
     agentImage:
-        repository: "registry1-docker-io.repo.cci.inads.net/hashicorp/vault"
+        repository: "registry1-docker-io.repo.cci.nokia.net/hashicorp/vault"
         tag: "1.16.1"
     securityContext:
         pod:
@@ -149,19 +149,19 @@ injector:
 Install the Vault Helm chart using Helm:
 
 ```sh
-helm3 install my-vault vault-helm-main -n testmdcs
+helm3 install my-vault vault-helm-main -n testcskm
 ```
 
 Verify the installation by checking the status of the pods:
 
 ```sh
-kubectl get pods -n testmdcs
+kubectl get pods -n testcskm
 ```
 
-### Step 11: Configure TLS for MDCS
+### Step 11: Configure TLS for CSKM
 
-Since MDCS operates in default TLS mode with certManager enabled, create a Kubernetes secret containing the `ca.crt`, `tls.crt`, and `tls.key` files. These files are available in the `/opt/Vault/tls` directory inside the MDCS pod. To create the secret, use the following command:
+Since CSKM operates in default TLS mode with certManager enabled, create a Kubernetes secret containing the `ca.crt`, `tls.crt`, and `tls.key` files. These files are available in the `/opt/Vault/tls` directory inside the CSKM pod. To create the secret, use the following command:
 
 ```sh
-kubectl create secret generic mdcs-tls-secret -n testmdcs --from-file=ca.crt=ca.crt --from-file=tls.crt=tls.crt --from-file=tls.key=tls.key
+kubectl create secret generic cskm-tls-secret -n testcskm --from-file=ca.crt=ca.crt --from-file=tls.crt=tls.crt --from-file=tls.key=tls.key
 ```
