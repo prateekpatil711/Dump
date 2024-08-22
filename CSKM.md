@@ -229,8 +229,8 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 3. **Generate a Root Certificate:**
    ```bash
    vault write -field=certificate pki/root/generate/internal \
-     common_name="my-kecy-kecy.ncms.svc.cluster.local" \
-     issuer_name="kecy-issuer" ttl=8760h
+     common_name="my-ckey-ckey.ncms.svc.cluster.local" \
+     issuer_name="ckey-issuer" ttl=8760h
    ```
 
    This command generates a root certificate with a common name and issuer name, valid for the specified TTL.
@@ -246,7 +246,7 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
 5. **Create a Role for Certificate Issuance:**
    ```bash
-   vault write pki/roles/kecy-issuer \
+   vault write pki/roles/ckey-issuer \
      allowed_domains=ncms.svc.cluster.local \
      allow_subdomains=true \
      max_ttl=30m
@@ -256,22 +256,22 @@ To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
 
 6. **Issue a Certificate Using the Created Role:**
    ```bash
-   vault write pki/issue/kecy-issuer \
-     common_name="my-kecy-kecy.ncms.svc.cluster.local"
+   vault write pki/issue/ckey-issuer \
+     common_name="my-ckey-ckey.ncms.svc.cluster.local"
    ```
 
    This command issues a certificate based on the specified role and common name.
 
-### Configuring Certificates in KECY
+### Configuring Certificates in CKEY
 
-To ensure that certificates are properly injected and mounted into the KECY pod at the correct locations, apply the following annotations to your pod specification:
+To ensure that certificates are properly injected and mounted into the CKEY pod at the correct locations, apply the following annotations to your pod specification:
 
 #### TLS Certificate Annotations
 
 ```yaml
-vault.hashicorp.com/agent-inject-secret-tls.crt: "pki/issue/kecy-issuer"
+vault.hashicorp.com/agent-inject-secret-tls.crt: "pki/issue/ckey-issuer"
 vault.hashicorp.com/agent-inject-template-tls.crt: |
-  {{- with secret "pki/issue/kecy-issuer" "common_name=my-kecy-kecy.ncms.svc.cluster.local" -}}
+  {{- with secret "pki/issue/ckey-issuer" "common_name=my-ckey-ckey.ncms.svc.cluster.local" -}}
   {{ .Data.certificate }}
   {{- end }}
 vault.hashicorp.com/secret-volume-path-tls.crt: "/opt/etc/keycloak/server_ssl_certificates"
@@ -281,9 +281,9 @@ vault.hashicorp.com/agent-inject-file-tls.crt: "tls.crt"
 #### TLS Key Annotations
 
 ```yaml
-vault.hashicorp.com/agent-inject-secret-tls.key: "pki/issue/kecy-issuer"
+vault.hashicorp.com/agent-inject-secret-tls.key: "pki/issue/ckey-issuer"
 vault.hashicorp.com/agent-inject-template-tls.key: |
-  {{- with secret "pki/issue/kecy-issuer" "common_name=my-kecy-kecy.ncms.svc.cluster.local" -}}
+  {{- with secret "pki/issue/ckey-issuer" "common_name=my-ckey-ckey.ncms.svc.cluster.local" -}}
   {{ .Data.private_key }}
   {{- end }}
 vault.hashicorp.com/secret-volume-path-tls.key: "/opt/etc/keycloak/server_ssl_certificates"
@@ -295,6 +295,5 @@ vault.hashicorp.com/agent-inject-file-tls.key: "tls.key"
 - `vault.hashicorp.com/secret-volume-path-tls.key`: Specifies the directory or volume mount location where the file will be stored within the pod.
 - `vault.hashicorp.com/agent-inject-file-tls.key`: Defines the filename for the stored certificate or key at the specified location.
 
-By using these configurations, you ensure that your KECY pod receives the necessary certificates, managed dynamically by HashiCorp Vault, and properly mounted for secure usage.
-```
+By using these configurations, you ensure that your CKEY pod receives the necessary certificates, managed dynamically by HashiCorp Vault, and properly mounted for secure usage.
 
