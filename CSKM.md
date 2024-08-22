@@ -10,11 +10,7 @@ Integrating CSKM with CKEY enhances security by dynamically managing secrets and
 
 Ensure CSKM is installed with the Kubernetes authentication method by enabling the `kubernetesAuth` parameter in the `Values.yaml` file. Once installed, exec into the CSKM pod and follow these steps to enable authentication, create secrets, and configure policies.
 
-### 2. Installation of CKEY
-
-Install CKEY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
-
-### 3. Retrieve Vault Token and CSKM Service IP
+### Step 2. Retrieve Vault Token and CSKM Service IP
 
 To connect to Vault from the Kubernetes cluster, obtain the Vault token and the CSKM service IP as follows:
 
@@ -33,15 +29,15 @@ export VAULT_ADDR=$(kubectl get service my-cskm-cskm -n testcskm -o jsonpath='{.
 export VAULT_ADDR=https://$VAULT_ADDR:8200
 ```
 
-### 4. Enable KV-V2 Secrets at the Path `internal`
+### Step 3. Enable KV-V2 Secrets at the Path `internal`
 
-To enable the KV-V2 secrets engine at the path `internal`:
+Users' login credentials are expected to be stored in Vault at the path `internal/database/config` by the apps you launch in the Inject secrets into the pod section. Enabling a key-value secret engine and entering a login and password at the designated path are necessary to generate this secret. To enable the KV-V2 secrets engine at the path `internal`:
 
 ```bash
 curl -k --header "X-Vault-Token: $VAULT_TOKEN" --request POST --data '{"type": "kv-v2"}' $VAULT_ADDR/v1/sys/mounts/internal
 ```
 
-### 5. Create a Secret at Path `internal/database/config`
+### Step 4. Create a Secret at Path `internal/database/config`
 
 Create a secret at the path `internal/database/config` with the following username and password:
 
@@ -52,7 +48,7 @@ curl -k --header "X-Vault-Token: $VAULT_TOKEN" --request POST --data '{"data": {
 
 ## Kubernetes and Vault Integration
 
-### Step 6: Create a Configuration File for Kubernetes Authentication
+### Step 5: Create a Configuration File for Kubernetes Authentication
 
 Create a `config.json` file to configure Kubernetes authentication with Vault. This file should contain the following details:
 
@@ -66,7 +62,7 @@ Create a `config.json` file to configure Kubernetes authentication with Vault. T
 
 This file defines the Kubernetes host and the certificate required for authentication. It also includes an option to disable the local CA JWT if necessary.
 
-### Step 7: Apply the Configuration and Verify
+### Step 6: Apply the Configuration and Verify
 
 To apply the configuration, use the following `curl` command to post the `config.json` file to the Vault Kubernetes authentication endpoint:
 
@@ -77,20 +73,15 @@ curl -k --header "X-Vault-Token:$VAULT_TOKEN" --request POST --data @config.json
 You can verify the configuration by querying the Kubernetes authentication endpoint:
 
 ```sh
-curl -k --header "X-Vault-Token:$VAULT_TOKEN" https://$cskm_SVC_IP:8200/v1/auth/kubernetes/config | jq
+curl -k --header "X-Vault-Token:$VAULT_TOKEN" $VAULT_ADDR/v1/auth/kubernetes/config | jq
 ```
 
-### Step 8: Define a Policy for Accessing Secrets
+### Step 7: Define a Policy for Accessing Secrets
 
 Create a policy named `int-ckey` that grants read access to secrets located at the path `internal/data/database/config`. The policy is defined in a JSON file as follows:
 
 ```json
-{
-  "policy": "path "internal/data/database/config" {
- capabilities = ["read"]
-}
-"
-}
+{ "policy": "path \"internal/data/database/config\" {\n capabilities = [\"read\"]\n}\n" }
 ```
 
 Apply the policy using the following `curl` command:
@@ -99,7 +90,7 @@ Apply the policy using the following `curl` command:
 curl -k --header "X-Vault-Token: $VAULT_TOKEN"  --request PUT  --data-binary @policy.json $VAULT_ADDR/v1/sys/policy/int-ckey
 ```
 
-### Step 9: Create a Kubernetes Authentication Role
+### Step 8: Create a Kubernetes Authentication Role
 
 Next, create a Kubernetes authentication role named `int-ckey`. This role binds a specific service account used by the CKEY StatefulSet to the authentication policy. The role configuration is defined as follows:
 
@@ -120,7 +111,7 @@ curl -k --request POST  --header "X-Vault-Token: $VAULT_TOKEN "  --data @role-da
 
 This role binds the service account of the CKEY StatefulSet, allowing its service account token to be used for Kubernetes authentication as an intermediate step.
 
-### Step 10: Install the Vault Injector
+### Step 9: Install the Vault Injector
 
 To install the Vault injector, use the open-source Vault Helm chart. After unzipping the chart, configure the parameters in the `values.yaml` file as follows:
 
@@ -158,10 +149,17 @@ Verify the installation by checking the status of the pods:
 kubectl get pods -n testcskm
 ```
 
-### Step 11: Configure TLS for CSKM
+### Step 10: Configure TLS for CSKM
 
 Since CSKM operates in default TLS mode with certManager enabled, create a Kubernetes secret containing the `ca.crt`, `tls.crt`, and `tls.key` files. These files are available in the `/opt/Vault/tls` directory inside the CSKM pod. To create the secret, use the following command:
 
 ```sh
 kubectl create secret generic cskm-tls-secret -n testcskm --from-file=ca.crt=ca.crt --from-file=tls.crt=tls.crt --from-file=tls.key=tls.key
 ```
+
+
+
+### 2. Installation of CKEY
+
+Install CKEY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
+
