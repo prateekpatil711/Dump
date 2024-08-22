@@ -201,5 +201,100 @@ Use the following command to apply the patch to the CKEY StatefulSet:
 kubectl patch sts my-ckey-ckey -n testcskm --patch "$(cat patch-chart.yaml)"
 ```
 
-This command applies the patch defined in `patch-chart.yaml` to the StatefulSet named `my-ckey-ckey` in the `testcskm` namespace.
+This command applies the patch defined in `patch-chart.yaml` to the StatefulSet named `my-ckey-ckey` in the `testcskm` namespace. After applying the patch, the CKEY StatefulSet will automatically restart its pods. The restarted pods will now include three containers. This ensures that secrets are securely managed and injected into your application using CSKM.
+
+
+## Configuring PKI Secret Engine for Certificate Management
+
+The PKI Secret Engine in HashiCorp Vault is designed to generate and manage certificates dynamically. These certificates play a critical role in security, serving purposes such as keystores and truststores. By utilizing dynamic certificate generation, the PKI Secret Engine ensures that certificates are refreshed automatically upon rotation, offering enhanced security through the use of short-lived certificates.
+
+### Vault PKI Configuration Steps
+
+To set up the PKI Secret Engine in HashiCorp Vault, follow these steps:
+
+1. **Enable the PKI Secret Engine:**
+   ```bash
+   vault secrets enable pki
+   ```
+
+   This command activates the PKI Secret Engine, making it available for use.
+
+2. **Configure the Maximum Lease Time-To-Live (TTL) for the PKI Engine:**
+   ```bash
+   vault secrets tune -max-lease-ttl=8760h pki
+   ```
+
+   This setting defines the maximum duration that issued certificates will be valid, set here to 8760 hours (or one year).
+
+3. **Generate a Root Certificate:**
+   ```bash
+   vault write -field=certificate pki/root/generate/internal \
+     common_name="my-kecy-kecy.ncms.svc.cluster.local" \
+     issuer_name="kecy-issuer" ttl=8760h
+   ```
+
+   This command generates a root certificate with a common name and issuer name, valid for the specified TTL.
+
+4. **Configure Issuing Certificates and Certificate Revocation List (CRL) Distribution Points:**
+   ```bash
+   vault write pki/config/urls \
+     issuing_certificates="http://127.0.0.1:8200/v1/pki/ca" \
+     crl_distribution_points="http://127.0.0.1:8200/v1/pki/crl"
+   ```
+
+   This configuration sets the URLs where issuing certificates and CRLs can be retrieved.
+
+5. **Create a Role for Certificate Issuance:**
+   ```bash
+   vault write pki/roles/kecy-issuer \
+     allowed_domains=ncms.svc.cluster.local \
+     allow_subdomains=true \
+     max_ttl=30m
+   ```
+
+   This command defines a role for issuing certificates, specifying allowed domains, subdomain allowance, and the maximum TTL for issued certificates.
+
+6. **Issue a Certificate Using the Created Role:**
+   ```bash
+   vault write pki/issue/kecy-issuer \
+     common_name="my-kecy-kecy.ncms.svc.cluster.local"
+   ```
+
+   This command issues a certificate based on the specified role and common name.
+
+### Configuring Certificates in KECY
+
+To ensure that certificates are properly injected and mounted into the KECY pod at the correct locations, apply the following annotations to your pod specification:
+
+#### TLS Certificate Annotations
+
+```yaml
+vault.hashicorp.com/agent-inject-secret-tls.crt: "pki/issue/kecy-issuer"
+vault.hashicorp.com/agent-inject-template-tls.crt: |
+  {{- with secret "pki/issue/kecy-issuer" "common_name=my-kecy-kecy.ncms.svc.cluster.local" -}}
+  {{ .Data.certificate }}
+  {{- end }}
+vault.hashicorp.com/secret-volume-path-tls.crt: "/opt/etc/keycloak/server_ssl_certificates"
+vault.hashicorp.com/agent-inject-file-tls.crt: "tls.crt"
+```
+
+#### TLS Key Annotations
+
+```yaml
+vault.hashicorp.com/agent-inject-secret-tls.key: "pki/issue/kecy-issuer"
+vault.hashicorp.com/agent-inject-template-tls.key: |
+  {{- with secret "pki/issue/kecy-issuer" "common_name=my-kecy-kecy.ncms.svc.cluster.local" -}}
+  {{ .Data.private_key }}
+  {{- end }}
+vault.hashicorp.com/secret-volume-path-tls.key: "/opt/etc/keycloak/server_ssl_certificates"
+vault.hashicorp.com/agent-inject-file-tls.key: "tls.key"
+```
+
+#### Annotations Explained
+
+- `vault.hashicorp.com/secret-volume-path-tls.key`: Specifies the directory or volume mount location where the file will be stored within the pod.
+- `vault.hashicorp.com/agent-inject-file-tls.key`: Defines the filename for the stored certificate or key at the specified location.
+
+By using these configurations, you ensure that your KECY pod receives the necessary certificates, managed dynamically by HashiCorp Vault, and properly mounted for secure usage.
+```
 
