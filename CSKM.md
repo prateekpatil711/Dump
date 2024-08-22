@@ -3,7 +3,7 @@
 Integrating CSKM with CKEY enhances security by dynamically managing secrets and securely injecting them into applications. Using the Vault injector, an open-source Vault chart, secrets are injected directly into Kubernetes pods, ensuring that sensitive information such as database credentials or API keys is handled securely and automatically rotated. This integration significantly improves the overall security posture of the system.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cca80ab9-4e66-4530-a35e-f069c60e8e80" alt="Centered Image" width="400"/>
+  <img src="https://github.com/user-attachments/assets/cca80ab9-4e66-4530-a35e-f069c60e8e80" alt="Centered Image" width="700"/>
 </p>
 
 ## Steps to Integrate CKEY with CSKM
