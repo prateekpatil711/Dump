@@ -186,11 +186,11 @@ spec:
 
 This patch adds annotations to the StatefulSet’s Pod template, enabling the Vault agent injector to inject secrets into the CKEY application.
 
-- `vault.hashicorp.com/agent-inject`: configures whether injection is explicitly enabled or disabled for a pod. This should be set to a true or false value. Defaults to false.
-- `vault.hashicorp.com/role`: Specifies the Vault role to be used by the injector.
-- `vault.hashicorp.com/agent-inject-secret-database-config.txt`: Configures Vault Agent to retrieve the secrets from Vault required by the container. The name of the secret is any unique string after `vault.hashicorp.com/agent-inject-secret-`, such as `vault.hashicorp.com/agent-inject-secret-foobar`. The value is the path in Vault where the secret is located.
-- `vault.hashicorp.com/ca-cert`: path of the CA certificate used to verify Vault's TLS. This can also be set as the default for all injected Agents via the `AGENT_INJECT_VAULT_CACERT_BYTES` environment variable which takes a PEM-encoded certificate or bundle.
-- `vault.hashicorp.com/tls-secret`: name of the Kubernetes secret containing TLS Client and CA certificates and keys. This is mounted to /vault/tls.
+- `vault.hashicorp.com/agent-inject` : configures whether injection is explicitly enabled or disabled for a pod. This should be set to a true or false value. Defaults to false.
+- `vault.hashicorp.com/role` : Specifies the Vault role to be used by the injector.
+- `vault.hashicorp.com/agent-inject-secret-database-config.txt` : Configures Vault Agent to retrieve the secrets from Vault required by the container. The name of the secret is any unique string after **vault.hashicorp.com/agent-inject-secret-**, such as **vault.hashicorp.com/agent-inject-secret-foobar**. The value is the path in Vault where the secret is located.
+- `vault.hashicorp.com/ca-cert` : path of the CA certificate used to verify Vault's TLS. This can also be set as the default for all injected Agents via the **AGENT_INJECT_VAULT_CACERT_BYTES** environment variable which takes a PEM-encoded certificate or bundle.
+- `vault.hashicorp.com/tls-secret` : name of the Kubernetes secret containing TLS Client and CA certificates and keys. This is mounted to /vault/tls.
 
 
 #### 2. Apply the Patch to the StatefulSet
