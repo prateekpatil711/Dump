@@ -6,7 +6,7 @@ Integrating CSKM with CKEY enhances security by dynamically managing secrets and
 
 ## Steps to Integrate CKEY with CSKM
 
-### 1. Installation of CSKM
+### Step 1. Installation of CSKM
 
 Ensure CSKM is installed with the Kubernetes authentication method by enabling the `kubernetesAuth` parameter in the `Values.yaml` file. Once installed, exec into the CSKM pod and follow these steps to enable authentication, create secrets, and configure policies.
 
@@ -159,7 +159,46 @@ kubectl create secret generic cskm-tls-secret -n testcskm --from-file=ca.crt=ca.
 
 
 
-### 2. Installation of CKEY
+### Step 11: Installation of CKEY
 
 Install CKEY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
+
+![image](https://github.com/user-attachments/assets/3f9a9f39-feca-41e6-b633-fcc79fc01415)
+
+### Step 12: Patching the CKEY StatefulSet to inject Vault Injector
+
+After configuring your environment, the next step is to patch the CKEY StatefulSet to include the Vault injector container. This will enable automatic secrets injection from HashiCorp Vault into the application. Below are the steps to accomplish this:
+
+#### 1. Create a Patch File
+Begin by creating a patch file named `patch-chart.yaml` with the following content:
+
+```yaml
+spec:
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'int-ckey'
+        vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+        vault.hashicorp.com/ca-cert: '/vault/tls/ca.crt'
+        vault.hashicorp.com/tls-secret: 'cskm-tls-secret'
+```
+
+This patch adds annotations to the StatefulSet’s Pod template, enabling the Vault agent injector to inject secrets into the CKEY application.
+
+`vault.hashicorp.com/agent-inject`: **'true'**: Enables Vault agent injection into the kecy pod.
+`vault.hashicorp.com/role`: **'int-kecy'**: Specifies the Vault role to be used by the injector.
+`vault.hashicorp.com/agent-inject-secret-database-config.txt`: Points to the specific Vault path where the database configuration secret is stored.
+`vault.hashicorp.com/ca-cert`: **'/vault/tls/ca.crt'**: Specifies the path to the CA certificate used for Vault TLS communication.
+`vault.hashicorp.com/tls-secret`: **'cskm-tls-secret'**: Indicates the Kubernetes secret containing TLS certificates.
+
+#### 2. Apply the Patch to the StatefulSet
+
+Use the following command to apply the patch to the CKEY StatefulSet:
+
+```bash
+kubectl patch sts my-ckey-ckey -n testcskm --patch "$(cat patch-chart.yaml)"
+```
+
+This command applies the patch defined in `patch-chart.yaml` to the StatefulSet named `my-ckey-ckey` in the `testcskm` namespace.
 
