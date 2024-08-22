@@ -4,6 +4,11 @@
 
 Integrating CSKM with CKEY enhances security by dynamically managing secrets and securely injecting them into applications. Using the Vault injector, an open-source Vault chart, secrets are injected directly into Kubernetes pods, ensuring that sensitive information such as database credentials or API keys is handled securely and automatically rotated. This integration significantly improves the overall security posture of the system.
 
+<p align="center">
+  <img src="[https://example.com/image.png](https://github.com/user-attachments/assets/cca80ab9-4e66-4530-a35e-f069c60e8e80)" alt="Centered Image" width="400"/>
+</p>
+
+
 ## Steps to Integrate CKEY with CSKM
 
 ### Step 1. Installation of CSKM
@@ -163,7 +168,6 @@ kubectl create secret generic cskm-tls-secret -n testcskm --from-file=ca.crt=ca.
 
 Install CKEY with the default configuration, ensuring the `automountServiceAccountToken` parameter is enabled in the `Values.yaml` file. This will automatically mount the service account token necessary for Kubernetes authentication.
 
-![image](https://github.com/user-attachments/assets/3f9a9f39-feca-41e6-b633-fcc79fc01415)
 
 ### Step 12: Patching the CKEY StatefulSet to inject Vault Injector
 
