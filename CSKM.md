@@ -205,7 +205,7 @@ kubectl patch sts my-ckey-ckey -n testcskm --patch "$(cat patch-chart.yaml)"
 This command applies the patch defined in `patch-chart.yaml` to the StatefulSet named `my-ckey-ckey` in the `testcskm` namespace. After applying the patch, the CKEY StatefulSet will automatically restart its pods. The restarted pods will now include three containers. This ensures that secrets are securely managed and injected into your application using CSKM.
 
 
-### Configuring PKI Secret Engine for Certificate Management
+## Configuring PKI Secret Engine for Certificate Management
 
 The PKI Secret Engine in CSKM is designed to generate and manage certificates dynamically. These certificates play a critical role in security, serving purposes such as keystores and truststores. By utilizing dynamic certificate generation, the PKI Secret Engine ensures that certificates are refreshed automatically upon rotation, offering enhanced security through the use of short-lived certificates.
 
